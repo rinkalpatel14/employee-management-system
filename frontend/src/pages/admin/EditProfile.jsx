@@ -69,7 +69,7 @@ const EditProfile = () => {
                 history.push("/profile")
             })
             .catch((error) => {
-                console.log(error.)
+                console.log(error.response)
             })
 
     }
