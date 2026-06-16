@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const AddEmployee = () => {
 
@@ -12,6 +13,7 @@ const AddEmployee = () => {
         designation: "",
         salary: ""
     })
+    const history = useHistory()
 
     useEffect(() => {
         getEmployeeUsers()
@@ -39,6 +41,11 @@ const AddEmployee = () => {
         })
     }
 
+    //cancle button
+    const handleCancle = () =>{
+        history.push('/employees')
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -54,6 +61,7 @@ const AddEmployee = () => {
         })
             .then((res) => {
                 toast.success("Employee Created Successfully")
+                history.push('/employees')
                 console.log(res.data.data)
             })
             .catch((error) => {
@@ -191,7 +199,6 @@ const AddEmployee = () => {
                                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-
                         </div>
 
                         {/* Buttons */}
@@ -200,6 +207,7 @@ const AddEmployee = () => {
 
                             <button
                                 type="button"
+                                onClick={handleCancle}
                                 className="px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-100 transition"
                             >
                                 Cancel

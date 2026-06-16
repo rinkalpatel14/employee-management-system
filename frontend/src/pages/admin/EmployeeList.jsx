@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
 
 const EmployeeList = () => {
-    const [employees, setEmployees] = useState([]);
+    const [employees, setEmployees] = useState([])
+
+    const token = localStorage.getItem('token')
+
+    //total department
+    const totalDepartments = new Set(
+        employees.map(emp => emp.department)
+    ).size
 
     useEffect(() => {
         fetchEmployees()
@@ -12,8 +21,6 @@ const EmployeeList = () => {
 
     //fetchEmployee
     const fetchEmployees = () => {
-
-        const token = localStorage.getItem('token')
 
         axios.get('http://localhost:5000/api/employee/get-all',
             {
@@ -28,6 +35,28 @@ const EmployeeList = () => {
             })
             .catch((error) => {
                 console.log(error.response)
+            })
+    }
+
+    //deleteEmployee
+    const handleDelete = (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this employee ?")
+
+        if (!confirmDelete) return
+
+        axios.delete(`http://localhost:5000/api/employee/delete/${id}`, {
+            headers: {
+                Authorization: token
+            }
+        }
+        )
+            .then((res) => {
+                toast.success("Employee Deleted Successfully")
+                console.log(res.data.data)
+                fetchEmployees() //table refresh
+            })
+            .catch((error) => {
+                console.log(error.response.message)
             })
     }
 
@@ -52,7 +81,7 @@ const EmployeeList = () => {
                         </h3>
 
                         <h1 className="text-3xl font-bold mt-2">
-                            2
+                            {totalDepartments}
                         </h1>
                     </div>
 
@@ -83,7 +112,9 @@ const EmployeeList = () => {
                     </div>
 
                     <button className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg shadow transition">
-                        + Add Employee
+                        <Link to="/add-employee">
+                            + Add Employee
+                        </Link>
                     </button>
                 </div>
 
@@ -167,12 +198,16 @@ const EmployeeList = () => {
 
                                     <td className="px-6 py-4">
                                         <div className="flex justify-center gap-2">
-                                            <button className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg">
-                                                <FaEdit />
-                                            </button>
+                                            <Link to={`/edit-employee/${emp._id}`}>
+                                                <button className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg">
+                                                    <FaEdit />
+                                                </button>
+                                            </Link>
 
                                             <button className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg">
-                                                <FaTrash />
+                                                <FaTrash
+                                                    onClick={() => handleDelete(emp._id)}
+                                                />
                                             </button>
                                         </div>
                                     </td>

@@ -27,4 +27,7 @@ router.patch('/update/:id',AUTH.authCheck,ROLE.roleCheck('admin'),EC.updateEmplo
 //deleteEmployee router
 router.delete('/delete/:id',AUTH.authCheck,ROLE.roleCheck('admin'),EC.deleteEmployee)
 
+//dashboard stats router
+router.get('/dashboard-stats',AUTH.authCheck,ROLE.roleCheck('admin'),EC.dashboardCheck)
+
 module.exports = router;

@@ -43,10 +43,15 @@ exports.createEmployee = async (req, res) => {
         }
 
         //generate employee id
-        const empCount = await EMP.countDocuments()
+        const lastEmployee = await EMP.findOne().sort({ employeeId: -1 })
 
-        data.employeeId =
-            "EMP" + String(empCount + 1).padStart(3, "0")
+        let employeeId = "EMP001"
+
+        if (lastEmployee) {
+            const lastNumber = parseInt(lastEmployee.employeeId.replace("EMP", "")) //002
+            employeeId = "EMP" + String(lastNumber + 1).padStart(3, "0") //002+1 = 003 = EMP003 
+        }
+        data.employeeId = employeeId //EMP003
 
         //create employee
         const createEmp = await EMP.create(data)
@@ -163,6 +168,50 @@ exports.deleteEmployee = async (req, res) => {
         })
     } catch (error) {
         res.status(400).json({
+            status: 'Fail',
+            message: error.message
+        })
+    }
+}
+
+//dashboard-stats api
+exports.dashboardCheck = async (req, res) => {
+    try {
+
+        const employees = await EMP.find()
+        
+        //Total Employee
+        const totalEmployees = employees.length
+
+        //Total Salary
+        let totalSalary = 0
+
+        employees.forEach((emp)=>{
+            totalSalary += Number(emp.salary)
+        })
+
+        //Total Departments
+        let departments = [];
+
+        employees.forEach((emp)=>{
+            if(!departments.includes(emp.department)){
+                departments.push(emp.department)
+            }
+        })
+
+        const totalDepartment = departments.length
+
+        return res.status(200).json({
+            status: 'Success',
+            message: 'Success',
+            data : {
+                totalEmployees,
+                totalDepartment,
+                totalSalary
+            }
+        })
+    } catch (error) {
+        return res.status(400).json({
             status: 'Fail',
             message: error.message
         })

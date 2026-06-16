@@ -7,10 +7,12 @@ import {
     FaSignOutAlt,
     FaBuilding
 } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = ({ isOpen }) => {
 
     const location = useLocation();
+    const history = useHistory()
 
     const menuItems = [
         {
@@ -34,6 +36,14 @@ const Sidebar = ({ isOpen }) => {
             icon: <FaUserCircle />
         }
     ];
+
+
+    //logout button
+    const handleLogout = () =>{
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        history.push('/')
+    }
 
     return (
         <div
@@ -165,6 +175,7 @@ const Sidebar = ({ isOpen }) => {
                 </div>
 
                 <button
+                    onClick={handleLogout}
                     className={`
                         w-full
                         flex items-center

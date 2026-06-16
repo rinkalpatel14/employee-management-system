@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import {
     FaUsers,
@@ -5,8 +6,38 @@ import {
     FaUserCheck,
     FaMoneyBillWave,
 } from "react-icons/fa";
+import axios from 'axios'
 
 const AdminDashboard = () => {
+
+    const [stats, setStats] = useState({
+        totalEmployees: 0,
+        totalDepartment: 0,
+        totalSalary: 0
+    })
+
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        fetchDashboardStats()
+    }, [])
+
+    //fetch Dashboard Satas
+    function fetchDashboardStats() {
+        axios.get('http://localhost:5000/api/employee/dashboard-stats',
+            {
+                headers: {
+                    Authorization: token
+                }
+            })
+            .then((res) => {
+                setStats(res.data.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     return (
         <AdminLayout>
             <div>
@@ -32,7 +63,7 @@ const AdminDashboard = () => {
                                 </p>
 
                                 <h2 className="text-4xl font-bold mt-2">
-                                    25
+                                    {stats.totalEmployees}
                                 </h2>
                             </div>
 
@@ -53,7 +84,7 @@ const AdminDashboard = () => {
                                 </p>
 
                                 <h2 className="text-4xl font-bold mt-2">
-                                    5
+                                    {stats.totalDepartment}
                                 </h2>
                             </div>
 
@@ -95,7 +126,7 @@ const AdminDashboard = () => {
                                 </p>
 
                                 <h2 className="text-4xl font-bold mt-2">
-                                    ₹5L
+                                    ₹{stats.totalSalary.toLocaleString()}
                                 </h2>
                             </div>
 

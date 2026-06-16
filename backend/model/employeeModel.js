@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const employeeSchema = mongoose.Schema({
 
     userId: {
-        type : mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user",
         required: true
     },
@@ -29,8 +29,8 @@ const employeeSchema = mongoose.Schema({
     salary: {
         type: Number,
         required: true
-    }
-
+    },
+  
 }, {
     timestamps: true
 })

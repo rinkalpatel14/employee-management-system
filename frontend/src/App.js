@@ -11,6 +11,9 @@ import AddEmployee from './pages/admin/AddEmployee';
 import Register from './pages/auth/Register';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
+import EditEmployee from './pages/admin/EditEmployee';
+import Profile from './pages/admin/Profile';
+import EditProfile from './pages/admin/EditProfile';
 
 
 
@@ -19,6 +22,15 @@ function App() {
     <>
       <Router>
         <Switch>
+          <Route path="/update-profile">
+            <EditProfile />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route path="/edit-employee/:id">
+            <EditEmployee />
+          </Route>
           <Route path="/add-employee">
             <AddEmployee />
           </Route>

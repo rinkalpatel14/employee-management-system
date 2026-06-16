@@ -1,5 +1,6 @@
 //import model
 const USER = require("../model/userModel");
+const EMP = require("../model/employeeModel")
 
 //bcrypt password
 const bcrypt = require("bcrypt");
@@ -118,15 +119,19 @@ exports.loginUser = async (req, res) => {
 }
 
 //profile api
-exports.profile = async (req, res) => {
+exports.getProfile = async (req, res) => {
   try {
+
+    const user = await USER.findById(req.user.id).select("-password")
+
     return res.status(200).json({
       status: 'Success',
       message: 'Profile Fetch Successfully',
-      data: req.user
+      data: user
 
     })
   } catch (error) {
+
     return res.status(400).json({
       status: 'Fail',
       message: error.message
@@ -138,13 +143,48 @@ exports.profile = async (req, res) => {
 exports.getEmployeeUsers = async (req, res) => {
   try {
 
-    const employeeUsers = await USER.find({role : "employee"}).select("-password") //password remove
+    // Employee collection mathi badha userIds ahi
+    const existEmployees = await EMP.find().select('userId')
+
+    const employeeId = existEmployees.map((emp => emp.userId.toString()))
+
+    const employeeUsers = await USER.find({ role: "employee", _id: { $nin: employeeId } }).select("-password") //password remove
 
     return res.status(200).json({
       status: 'Success',
       message: 'Data Fetch Successfully',
-      total : employeeUsers.length,
-      data : employeeUsers
+      total: employeeUsers.length,
+      data: employeeUsers
+    })
+
+  } catch (error) {
+
+    return res.status(400).json({
+      status: 'Fail',
+      message: error.message
+    })
+
+  }
+}
+
+
+//update Profile
+exports.updateProfile = async (req, res) => {
+  try {
+
+    const data = req.body
+
+    if (req.file) {
+      data.profileImage = file.file.filename
+    }
+
+    const userId = req.user.id
+    const editData = await USER.findByIdAndUpdate(userId, data, { new: true })
+
+    return res.status(200).json({
+      status: 'Success',
+      message: 'Profile Updated Successfully',
+      data: editData
     })
 
   } catch (error) {
