@@ -23,7 +23,7 @@ const EmployeeList = () => {
     //fetchEmployee
     const fetchEmployees = () => {
 
-        axios.get('http://localhost:5000/api/employee/get-all',
+        axios.get('https://employee-management-system-1-mj50.onrender.com/api/employee/get-all',
             {
                 headers: {
                     Authorization: token
@@ -45,7 +45,7 @@ const EmployeeList = () => {
 
         if (!confirmDelete) return
 
-        axios.delete(`http://localhost:5000/api/employee/delete/${id}`, {
+        axios.delete(`https://employee-management-system-1-mj50.onrender.com/api/employee/delete/${id}`, {
             headers: {
                 Authorization: token
             }

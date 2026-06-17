@@ -30,7 +30,7 @@ const EditEmployee = () => {
 
     //fetch employee
     const fetchEmployee = () => {
-        axios.get(`http://localhost:5000/api/employee/get-single/${id}`, {
+        axios.get(`https://employee-management-system-1-mj50.onrender.com/api/employee/get-single/${id}`, {
             headers: {
                 Authorization: token
             }
@@ -56,7 +56,7 @@ const EditEmployee = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.patch(`http://localhost:5000/api/employee/update/${id}`, formData, {
+        axios.patch(`https://employee-management-system-1-mj50.onrender.com/api/employee/update/${id}`, formData, {
             headers: {
                 Authorization: token
             }

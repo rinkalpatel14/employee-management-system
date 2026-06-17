@@ -17,7 +17,7 @@ const Profile = () => {
     }, [])
 
     const getProfile = () => {
-        axios.get("http://localhost:5000/api/auth/profile", {
+        axios.get("https://employee-management-system-1-mj50.onrender.com/api/auth/profile", {
             headers: {
                 Authorization: token
             }
@@ -58,7 +58,7 @@ const Profile = () => {
                                 src={
                                     user.profileImage &&
                                         user.profileImage !== "undefined"
-                                        ? `http://localhost:5000/images/${user.profileImage}`
+                                        ? `https://employee-management-system-1-mj50.onrender.com/images/${user.profileImage}`
                                         : `ui-avatars.com/api/?name=${user.name || "User"}&background=2563eb&color=fff`
                                 }
                                 alt="Profile"

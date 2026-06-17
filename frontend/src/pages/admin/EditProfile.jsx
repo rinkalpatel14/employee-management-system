@@ -32,7 +32,7 @@ const EditProfile = () => {
 
     //getProfile
     const getProfile = () => {
-        axios.get('http://localhost:5000/api/auth/profile', {
+        axios.get('https://employee-management-system-1-mj50.onrender.com/api/auth/profile', {
             headers: {
                 Authorization: token
             }
@@ -44,7 +44,7 @@ const EditProfile = () => {
 
                 if (user.profileImage) {
                     setPriview(
-                        `http://localhost:5000/images/${user.profileImage}`
+                        `https://employee-management-system-1-mj50.onrender.com/images/${user.profileImage}`
                     )
                 }
             })
@@ -67,7 +67,7 @@ const EditProfile = () => {
             formData.append("profileImage", profileImage)
         }
 
-        axios.patch('http://localhost:5000/api/auth/update-profile', formData,
+        axios.patch('https://employee-management-system-1-mj50.onrender.com/api/auth/update-profile', formData,
             {
                 headers: {
                     Authorization: token

@@ -27,7 +27,7 @@ const AdminDashboard = () => {
 
     //fetch Dashboard Satas
     function fetchDashboardStats() {
-        axios.get('http://localhost:5000/api/employee/dashboard-stats',
+        axios.get('https://employee-management-system-1-mj50.onrender.com/api/employee/dashboard-stats',
             {
                 headers: {
                     Authorization: token
