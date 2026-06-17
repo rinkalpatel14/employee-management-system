@@ -27,6 +27,7 @@ const EditProfile = () => {
 
     useEffect(() => {
         getProfile()
+        // eslint-disable-next-line
     }, [])
 
     //getProfile
@@ -60,13 +61,13 @@ const EditProfile = () => {
 
         const formData = new FormData()
 
-        formData.append('name',name)
+        formData.append('name', name)
 
-        if(profileImage){
-            formData.append("profileImage",profileImage)
+        if (profileImage) {
+            formData.append("profileImage", profileImage)
         }
 
-        axios.patch('https://employee-management-system-dwvi.onrender.com/api/auth/update-profile',formData,
+        axios.patch('https://employee-management-system-dwvi.onrender.com/api/auth/update-profile', formData,
             {
                 headers: {
                     Authorization: token

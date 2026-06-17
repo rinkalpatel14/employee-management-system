@@ -17,6 +17,7 @@ const AddEmployee = () => {
 
     useEffect(() => {
         getEmployeeUsers()
+        // eslint-disable-next-line
     }, [])
 
     //getEmployee Users
@@ -42,7 +43,7 @@ const AddEmployee = () => {
     }
 
     //cancle button
-    const handleCancle = () =>{
+    const handleCancle = () => {
         history.push('/employees')
     }
 

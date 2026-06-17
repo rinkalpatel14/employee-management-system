@@ -25,6 +25,7 @@ const EditEmployee = () => {
 
     useEffect(() => {
         fetchEmployee()
+        // eslint-disable-next-line
     }, [])
 
     //fetch employee
@@ -52,22 +53,22 @@ const EditEmployee = () => {
     }
 
     //handleSubmit
-    const handleSubmit = (e) =>{
-            e.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
-            axios.patch(`https://employee-management-system-dwvi.onrender.com/api/employee/update/${id}`,formData,{
-                headers : {
-                    Authorization:token
-                }
-            })
-            .then((res)=>{
+        axios.patch(`https://employee-management-system-dwvi.onrender.com/api/employee/update/${id}`, formData, {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then((res) => {
                 toast.success("Updated Successfully")
-                setTimeout(()=>{
-                     history.push('/employees')
-                },1000)
+                setTimeout(() => {
+                    history.push('/employees')
+                }, 1000)
                 // console.log(res.data.data)
             })
-            .catch((error)=>{
+            .catch((error) => {
                 toast.error(error.response.message)
                 // console.log(error.response.message)
             })
