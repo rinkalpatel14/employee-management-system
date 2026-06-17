@@ -5,8 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose')
 const cors = require('cors')
+require('dotenv').config()
 
-mongoose.connect('mongodb://localhost:27017/EMSytem_db')
+var createError = require('http-errors');
+var express = require('express');
+
+mongoose.connect(process.env.MONGO_URL)
   .then(() => {
     console.log('Connection Successfully')
   })
