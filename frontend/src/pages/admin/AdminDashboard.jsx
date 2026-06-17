@@ -7,6 +7,7 @@ import {
     FaMoneyBillWave,
 } from "react-icons/fa";
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
 
@@ -17,25 +18,27 @@ const AdminDashboard = () => {
     })
 
     const token = localStorage.getItem('token')
+    console.log(token)
 
     useEffect(() => {
         fetchDashboardStats()
-         // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [])
 
     //fetch Dashboard Satas
     function fetchDashboardStats() {
-        axios.get('https://employee-management-system-dwvi.onrender.com/api/employee/dashboard-stats',
+        axios.get('http://localhost:5000/api/employee/dashboard-stats',
             {
                 headers: {
                     Authorization: token
                 }
             })
             .then((res) => {
+                console.log("API Response:", res.data)
                 setStats(res.data.data)
             })
             .catch((error) => {
-                console.log(error)
+                toast.error(error.response?.data?.message || error.message)
             })
     }
 

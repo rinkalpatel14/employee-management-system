@@ -30,7 +30,7 @@ const EditEmployee = () => {
 
     //fetch employee
     const fetchEmployee = () => {
-        axios.get(`https://employee-management-system-dwvi.onrender.com/api/employee/get-single/${id}`, {
+        axios.get(`http://localhost:5000/api/employee/get-single/${id}`, {
             headers: {
                 Authorization: token
             }
@@ -48,7 +48,7 @@ const EditEmployee = () => {
             })
 
             .catch((error) => {
-                console.log(error.response.message)
+                 toast.error(error.response?.data?.message || error.message)
             })
     }
 
@@ -56,7 +56,7 @@ const EditEmployee = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.patch(`https://employee-management-system-dwvi.onrender.com/api/employee/update/${id}`, formData, {
+        axios.patch(`http://localhost:5000/api/employee/update/${id}`, formData, {
             headers: {
                 Authorization: token
             }
@@ -69,7 +69,7 @@ const EditEmployee = () => {
                 // console.log(res.data.data)
             })
             .catch((error) => {
-                toast.error(error.response.message)
+               toast.error(error.response?.data?.message || error.message)
                 // console.log(error.response.message)
             })
     }

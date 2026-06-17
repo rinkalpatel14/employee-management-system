@@ -23,7 +23,7 @@ const AddEmployee = () => {
     //getEmployee Users
     const getEmployeeUsers = () => {
 
-        axios.get('https://employee-management-system-dwvi.onrender.com/api/auth/employee-users')
+        axios.get('http://localhost:5000/api/auth/employee-users')
             .then((res) => {
                 console.log(res.data.data)
                 setUsers(res.data.data)
@@ -55,7 +55,7 @@ const AddEmployee = () => {
         const token = localStorage.getItem('token')
         //api call
 
-        axios.post('https://employee-management-system-dwvi.onrender.com/api/employee/create', formData, {
+        axios.post('http://localhost:5000/api/employee/create', formData, {
             headers: {
                 Authorization: token
             }
@@ -66,7 +66,7 @@ const AddEmployee = () => {
                 console.log(res.data.data)
             })
             .catch((error) => {
-                toast.error(error.response.data.message)
+                  toast.error(error.response?.data?.message || error.message)
             })
 
     }

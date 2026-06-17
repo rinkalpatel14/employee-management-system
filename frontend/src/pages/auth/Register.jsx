@@ -42,14 +42,14 @@ const Register = () => {
         data.append("profileImage", formData.profileImage)
 
         //api call
-        axios.post('https://employee-management-system-dwvi.onrender.com/api/auth/register', data)
+        axios.post('http://localhost:5000/api/auth/register', data)
             .then((res) => {
                 toast.success('Register Successfully')
                 history.push('/')
                 // console.log(res.data.data)
             })
             .catch((error) => {
-                toast.error(error.response.data)
+                toast.error(error.response?.data?.message || error.message)
             })
     };
 

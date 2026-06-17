@@ -3,7 +3,7 @@ import loginImage from "../../assets/login.jpg";
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 const Login = () => {
 
@@ -19,7 +19,7 @@ const Login = () => {
         // console.log(email)
         // console.log(password)
 
-        axios.post('https://employee-management-system-dwvi.onrender.com/api/auth/login', {
+        axios.post('http://localhost:5000/api/auth/login', {
             email,
             password
         })
@@ -36,7 +36,9 @@ const Login = () => {
 
             })
             .catch((error) => {
-                toast.error(error.response.data.message)
+                toast.error(
+                    error.response?.data?.message || error.message
+                )
                 // console.log(error.response.data)
             })
 
@@ -77,7 +79,7 @@ const Login = () => {
                                 <div className="mb-5">
                                     <label htmlFor="" className="block text-sm font-medium text-gray-700 mb-2">
                                         Email Address <span className="text-red-500">*</span>
-                                        </label>
+                                    </label>
                                     <input type="email"
                                         placeholder="Enter Your Email"
                                         value={email}

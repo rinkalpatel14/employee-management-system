@@ -174,6 +174,9 @@ exports.updateProfile = async (req, res) => {
 
     const data = req.body
 
+    console.log("BODY =", req.body);
+    console.log("FILE =", req.file);
+
     if (req.file) {
       data.profileImage = req.file.filename
     }
@@ -195,4 +198,4 @@ exports.updateProfile = async (req, res) => {
     })
 
   }
-}
+} 

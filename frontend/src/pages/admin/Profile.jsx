@@ -3,6 +3,7 @@ import AdminLayout from "../../components/admin/AdminLayout";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
 
 const Profile = () => {
 
@@ -16,7 +17,7 @@ const Profile = () => {
     }, [])
 
     const getProfile = () => {
-        axios.get("https://employee-management-system-dwvi.onrender.com/api/auth/profile", {
+        axios.get("http://localhost:5000/api/auth/profile", {
             headers: {
                 Authorization: token
             }
@@ -25,7 +26,7 @@ const Profile = () => {
                 setUser(res.data.data);
             })
             .catch((error) => {
-                console.log(error);
+                 toast.error(error.response?.data?.message || error.message)
             })
     }
 
@@ -57,8 +58,8 @@ const Profile = () => {
                                 src={
                                     user.profileImage &&
                                         user.profileImage !== "undefined"
-                                        ? `https://employee-management-system-dwvi.onrender.com/images/${user.profileImage}`
-                                        : `https://ui-avatars.com/api/?name=${user.name || "User"}&background=2563eb&color=fff`
+                                        ? `http://localhost:5000/images/${user.profileImage}`
+                                        : `ui-avatars.com/api/?name=${user.name || "User"}&background=2563eb&color=fff`
                                 }
                                 alt="Profile"
                                 className="w-40 h-40 rounded-full object-cover border-4 border-blue-500 shadow-lg"

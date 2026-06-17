@@ -32,7 +32,7 @@ const EditProfile = () => {
 
     //getProfile
     const getProfile = () => {
-        axios.get('https://employee-management-system-dwvi.onrender.com/api/auth/profile', {
+        axios.get('http://localhost:5000/api/auth/profile', {
             headers: {
                 Authorization: token
             }
@@ -44,12 +44,12 @@ const EditProfile = () => {
 
                 if (user.profileImage) {
                     setPriview(
-                        `https://employee-management-system-dwvi.onrender.com/images/${user.profileImage}`
+                        `http://localhost:5000/images/${user.profileImage}`
                     )
                 }
             })
             .catch((error) => {
-                console.log(error)
+                toast.error(error.response?.data?.message || error.message)
             })
     }
 
@@ -67,7 +67,7 @@ const EditProfile = () => {
             formData.append("profileImage", profileImage)
         }
 
-        axios.patch('https://employee-management-system-dwvi.onrender.com/api/auth/update-profile', formData,
+        axios.patch('http://localhost:5000/api/auth/update-profile', formData,
             {
                 headers: {
                     Authorization: token
@@ -79,7 +79,7 @@ const EditProfile = () => {
                 history.push("/profile")
             })
             .catch((error) => {
-                console.log(error.response)
+               toast.error(error.response?.data?.message || error.message)
             })
 
     }

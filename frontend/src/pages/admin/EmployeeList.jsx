@@ -23,7 +23,7 @@ const EmployeeList = () => {
     //fetchEmployee
     const fetchEmployees = () => {
 
-        axios.get('https://employee-management-system-dwvi.onrender.com/api/employee/get-all',
+        axios.get('http://localhost:5000/api/employee/get-all',
             {
                 headers: {
                     Authorization: token
@@ -35,7 +35,7 @@ const EmployeeList = () => {
                 setEmployees(res.data.data)
             })
             .catch((error) => {
-                console.log(error.response)
+                 toast.error(error.response?.data?.message || error.message)
             })
     }
 
@@ -45,7 +45,7 @@ const EmployeeList = () => {
 
         if (!confirmDelete) return
 
-        axios.delete(`https://employee-management-system-dwvi.onrender.com/api/employee/delete/${id}`, {
+        axios.delete(`http://localhost:5000/api/employee/delete/${id}`, {
             headers: {
                 Authorization: token
             }
@@ -57,7 +57,7 @@ const EmployeeList = () => {
                 fetchEmployees() //table refresh
             })
             .catch((error) => {
-                console.log(error.response.message)
+               toast.error(error.response?.data?.message || error.message)
             })
     }
 
