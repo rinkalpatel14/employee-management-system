@@ -9,7 +9,8 @@ const EditProfile = () => {
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
-    const [profileImage, setprofileImage] = useState("")
+    const [profileImage, setProfileImage] = useState(null)
+    const [privew, setPriview] = useState("")
 
     const history = useHistory()
     const token = localStorage.getItem('token')
@@ -19,7 +20,8 @@ const EditProfile = () => {
         const file = e.target.files[0]
 
         if (file) {
-            setprofileImage(URL.createObjectURL(file))
+            setProfileImage(file)
+            setPriview(URL.createObjectURL(file))
         }
     }
 
@@ -40,7 +42,7 @@ const EditProfile = () => {
                 setEmail(user.email)
 
                 if (user.profileImage) {
-                    setprofileImage(
+                    setPriview(
                         `http://localhost:5000/images/${user.profileImage}`
                     )
                 }
@@ -54,10 +56,17 @@ const EditProfile = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.patch('http://localhost:5000/api/auth/update-profile',
-            {
-                name: name
-            },
+        // console.log(profileImage)
+
+        const formData = new FormData()
+
+        formData.append('name',name)
+
+        if(profileImage){
+            formData.append("profileImage",profileImage)
+        }
+
+        axios.patch('http://localhost:5000/api/auth/update-profile',formData,
             {
                 headers: {
                     Authorization: token
@@ -69,7 +78,7 @@ const EditProfile = () => {
                 history.push("/profile")
             })
             .catch((error) => {
-                console.log(error.)
+                console.log(error.response)
             })
 
     }
@@ -101,8 +110,8 @@ const EditProfile = () => {
 
                                 <img
                                     src={
-                                        profileImage
-                                            ? profileImage
+                                        privew
+                                            ? privew
                                             : `https://ui-avatars.com/api/?name=${name}&background=2563eb&color=fff&size=200`
                                     }
                                     alt="Profile"

@@ -175,7 +175,7 @@ exports.updateProfile = async (req, res) => {
     const data = req.body
 
     if (req.file) {
-      data.profileImage = file.file.filename
+      data.profileImage = req.file.filename
     }
 
     const userId = req.user.id

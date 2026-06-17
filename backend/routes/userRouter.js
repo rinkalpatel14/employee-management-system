@@ -9,6 +9,7 @@ let AUTH = require('../middleware/authCheck')
 
 //import multer
 const multer = require('multer')
+const path = require("path")
 
 //multer code
 const storage = multer.diskStorage({
