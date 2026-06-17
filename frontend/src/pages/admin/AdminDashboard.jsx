@@ -24,7 +24,7 @@ const AdminDashboard = () => {
 
     //fetch Dashboard Satas
     function fetchDashboardStats() {
-        axios.get('http://localhost:5000/api/employee/dashboard-stats',
+        axios.get('https://employee-management-system-dwvi.onrender.com/api/employee/dashboard-stats',
             {
                 headers: {
                     Authorization: token

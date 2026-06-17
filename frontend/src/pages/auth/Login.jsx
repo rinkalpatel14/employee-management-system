@@ -19,7 +19,7 @@ const Login = () => {
         // console.log(email)
         // console.log(password)
 
-        axios.post('http://localhost:5000/api/auth/login', {
+        axios.post('https://employee-management-system-dwvi.onrender.com/api/auth/login', {
             email,
             password
         })
