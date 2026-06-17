@@ -17,6 +17,7 @@ const EmployeeList = () => {
 
     useEffect(() => {
         fetchEmployees()
+         // eslint-disable-next-line
     }, [])
 
     //fetchEmployee

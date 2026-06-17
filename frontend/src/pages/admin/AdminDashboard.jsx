@@ -20,6 +20,7 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         fetchDashboardStats()
+         // eslint-disable-next-line
     }, [])
 
     //fetch Dashboard Satas

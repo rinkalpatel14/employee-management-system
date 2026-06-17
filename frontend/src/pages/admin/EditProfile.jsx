@@ -3,7 +3,7 @@ import AdminLayout from "../../components/admin/AdminLayout";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { FaCamera, FaSave, FaArrowLeft } from "react-icons/fa";
+import { FaCamera, FaSave } from "react-icons/fa";
 
 const EditProfile = () => {
 

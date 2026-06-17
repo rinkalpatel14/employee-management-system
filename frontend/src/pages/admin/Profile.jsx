@@ -6,13 +6,14 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Profile = () => {
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({})
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
 
     useEffect(() => {
-        getProfile();
-    }, []);
+        getProfile()
+         // eslint-disable-next-line
+    }, [])
 
     const getProfile = () => {
         axios.get("https://employee-management-system-dwvi.onrender.com/api/auth/profile", {
@@ -25,8 +26,8 @@ const Profile = () => {
             })
             .catch((error) => {
                 console.log(error);
-            });
-    };
+            })
+    }
 
     return (
         <AdminLayout>
@@ -188,7 +189,7 @@ const Profile = () => {
             </div>
 
         </AdminLayout>
-    );
-};
+    )
+}
 
-export default Profile;
+export default Profile

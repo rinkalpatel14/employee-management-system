@@ -5,7 +5,6 @@ import {
     FaUserPlus,
     FaUserCircle,
     FaSignOutAlt,
-    FaBuilding
 } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 
