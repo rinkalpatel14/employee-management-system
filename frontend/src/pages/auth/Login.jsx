@@ -45,27 +45,27 @@ const Login = () => {
     }
 
     return (
-        <div className="h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 flex items-center justify-center px-4 overflow-hidden" >
+        <div className="bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 flex items-center justify-center px-4 py-6" >
 
-            <div className="w-full max-w-[1100px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] overflow-hidden">
+            <div className="w-full max-w-[1100px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.12)] ">
 
                 <div className="grid md:grid-cols-[1.1fr_0.9fr]">
 
                     {/* left side */}
-                    <div className="bg-gradient-to-br from-blue-50 to-slate-100 p-12 flex flex-col justify-center">
+                    <div className="bg-gradient-to-br from-blue-50 to-slate-100 p-6 md:p-12 flex flex-col justify-center">
 
-                        <h1 className="text-4xl font-bold text-slate-900 leading-tight">Employee <br /> Management System</h1>
+                        <h1 className="text-2xl md:text-4xl font-bold text-slate-900 leading-tight">Employee <br /> Management System</h1>
 
                         <p className="text-gray-600 mt-4 text-base leading-7"> Manage your employees efficiently with a modern
                             employee management platform.</p>
 
                         <div className="flex justify-center mt-8">
-                            <img src={loginImage} alt="" />
+                            <img src={loginImage} alt=""   className="w-full max-w-md h-auto" />
                         </div>
                     </div>
 
                     {/* right side */}
-                    <div className="bg-white flex items-center justify-center p-10">
+                    <div className="bg-white flex items-center justify-center p-6 md:p-10">
                         <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-100 p-8 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
                             <h2 className="text-3xl font-bold text-slate-900">
                                 Welcome Back 👋

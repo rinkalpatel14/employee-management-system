@@ -1,30 +1,32 @@
-import Sidebar from '../../components/admin/Sidebar';
-import Navbar from '../../components/admin/Navbar';
-import { useState } from 'react';
+import { useState } from "react";
+import Sidebar from "../../components/admin/Sidebar";
+import Navbar from "../../components/admin/Navbar";
 
 const AdminLayout = ({ children }) => {
 
-    const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false)
 
-    return (
-        <div className="flex min-h-screen">
+  return (
 
-            <Sidebar isOpen={isOpen}
-                setIsOpen={setIsOpen} />
+    <div className="min-h-screen bg-gray-100">
+      <Sidebar
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
 
-            <div className="flex-1 bg-gray-100">
+      <div className="md:ml-64">
+        <Navbar
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
 
-                <Navbar isOpen={isOpen}
-                    setIsOpen={setIsOpen} />
-
-                <div className="ml-64 mt-16 p-8">
-                    {children}
-                </div>
-
-            </div>
-
-        </div>
-    );
+        <main className="mt-16 p-4 md:p-6">
+          {children}
+        </main>
+      </div>
+    </div>
+    
+  )
 }
 
 export default AdminLayout

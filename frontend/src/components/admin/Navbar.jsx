@@ -3,85 +3,80 @@ import { useLocation } from "react-router-dom";
 
 const Navbar = ({ isOpen, setIsOpen }) => {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"))
 
-    const location = useLocation();
+  const location = useLocation()
 
-    const getTitle = () => {
+  const getTitle = () => {
 
-        switch (location.pathname) {
+    if (location.pathname.startsWith("/edit-employee")) {
+      return "Edit Employee";
+    }
 
-            case "/admin-dashboard":
-                return "Dashboard";
+    switch (location.pathname) {
+      case "/admin-dashboard":
+        return "Dashboard"
 
-            case "/employees":
-                return "Employees";
+      case "/employees":
+        return "Employees"
 
-            case "/add-employee":
-                return "Add Employee";
+      case "/add-employee":
+        return "Add Employee"
 
-            case "/profile":
-                return "Profile";
+      case "/edit-employee":
+        return "Edit Employee"
 
-            default:
-                return "Dashboard";
-        }
-    };
+      case "/profile":
+        return "Profile"
 
-    return (
-        <div
-            className={`
-                fixed
-                top-0
-                right-0
-                ${isOpen ? "left-64" : "left-20"}
-                h-16
-                bg-white
-                border-b
-                border-gray-200
-                flex
-                items-center
-                justify-between
-                px-6
-                z-50
-                transition-all
-                duration-300
-            `}
+      default:
+        return "Dashboard"
+    }
+  }
+
+  return (
+    <header
+      className="
+        fixed
+        top-0
+        right-0
+        left-0
+        md:left-64
+        h-16
+        bg-white
+        border-b
+        border-gray-200
+        flex
+        items-center
+        justify-between
+        px-4 md:px-6
+        z-40
+      "
+    >
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-xl"
         >
+          <FaBars />
+        </button>
 
-            {/* Left Side */}
+        <h2 className="text-lg font-semibold">
+          {getTitle()}
+        </h2>
+      </div>
 
-            <div className="flex items-center gap-4">
-
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="text-gray-600 text-xl hover:text-blue-600"
-                >
-                    <FaBars />
-                </button>
-
-                <h2 className="text-lg font-semibold text-gray-800">
-                    {getTitle()}
-                </h2>
-
-            </div>
-
-            {/* Right Side */}
-
-            <div className="flex items-center gap-3">
-
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
-                    {user?.name?.charAt(0).toUpperCase()}
-                </div>
-
-                <span className="font-medium text-gray-700">
-                    {user?.name}
-                </span>
-
-            </div>
-
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center">
+          {user?.name?.charAt(0)?.toUpperCase() || "A"}
         </div>
-    );
-};
 
-export default Navbar;
+        <span className="hidden sm:block">
+          {user?.name}
+        </span>
+      </div>
+    </header>
+  )
+}
+
+export default Navbar

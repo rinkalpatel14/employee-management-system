@@ -58,7 +58,6 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-white rounded-2xl shadow p-8 min-h-[140px] ">
 
                     {/* Total Employees */}
-
                     <div className="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
                         <div className="flex justify-between items-center">
                             <div>
@@ -79,7 +78,6 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Departments */}
-
                     <div className="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
                         <div className="flex justify-between items-center">
                             <div>
@@ -100,7 +98,6 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Active Employees */}
-
                     <div className="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
                         <div className="flex justify-between items-center">
                             <div>
@@ -121,7 +118,6 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Total Salary */}
-
                     <div className="bg-white p-8 rounded-xl shadow hover:shadow-lg transition">
                         <div className="flex justify-between items-center">
                             <div>
@@ -144,7 +140,7 @@ const AdminDashboard = () => {
                 </div>
             </div>
         </AdminLayout>
-    );
-};
+    )
+}
 
-export default AdminDashboard;
+export default AdminDashboard

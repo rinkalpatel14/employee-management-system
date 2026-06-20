@@ -7,13 +7,29 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const AddEmployee = () => {
 
     const [users, setUsers] = useState([])
-    const [formData, setFormData] = useState({
-        userId: "",
-        department: "",
-        designation: "",
-        salary: ""
-    })
+    const [userId, setUserId] = useState("")
+    const [department, setDepartment] = useState("")
+    const [designation, setDesignation] = useState("")
+    const [salary, setSalary] = useState("")
+
     const history = useHistory()
+
+    const designationMap = {
+        HR: ["HR Executive", "Recruiter", "HR Manager"],
+        Development: [
+            "Junior Developer",
+            "Software Developer",
+            "Senior Developer",
+            "Team Lead"
+        ],
+        QA: ["QA Engineer", "Senior QA Engineer", "Test Lead"],
+        Finance: ["Accountant", "Finance Executive", "Finance Manager"],
+        Sales: ["Sales Executive", "Sales Manager"],
+        Marketing: ["Marketing Executive", "Marketing Manager"],
+        Support: ["Support Executive", "Technical Support Engineer"],
+        DevOps: ["DevOps Engineer", "Cloud Engineer"],
+        "UI/UX": ["UI Designer", "UI/UX Designer"] //using slash then "UI/UX" means ""
+    }
 
     useEffect(() => {
         getEmployeeUsers()
@@ -25,21 +41,13 @@ const AddEmployee = () => {
 
         axios.get('https://employee-management-system-1-mj50.onrender.com/api/auth/employee-users')
             .then((res) => {
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 setUsers(res.data.data)
             })
             .catch((error) => {
                 console.log(error.response)
             })
 
-    }
-
-
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
     }
 
     //cancle button
@@ -50,12 +58,11 @@ const AddEmployee = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        console.log(formData)
-
+        const employeeData = { userId, department, designation, salary }
         const token = localStorage.getItem('token')
         //api call
 
-        axios.post('https://employee-management-system-1-mj50.onrender.com/api/employee/create', formData, {
+        axios.post('https://employee-management-system-1-mj50.onrender.com/api/employee/create', employeeData, {
             headers: {
                 Authorization: token
             }
@@ -63,10 +70,10 @@ const AddEmployee = () => {
             .then((res) => {
                 toast.success("Employee Created Successfully")
                 history.push('/employees')
-                console.log(res.data.data)
+                // console.log(res.data.data)
             })
             .catch((error) => {
-                  toast.error(error.response?.data?.message || error.message)
+                toast.error(error.response?.data?.message || error.message)
             })
 
     }
@@ -77,7 +84,6 @@ const AddEmployee = () => {
             <div className="max-w-5xl mx-auto">
 
                 {/* Header */}
-
                 <div className="mb-5">
                     <h1 className="text-4xl font-bold text-gray-800">
                         Add Employee
@@ -109,8 +115,8 @@ const AddEmployee = () => {
 
                             <select
                                 name="userId"
-                                value={formData.userId}
-                                onChange={handleChange}
+                                value={userId}
+                                onChange={(e) => setUserId(e.target.value)}
                                 className="w-full px-4 py-3 mb-6 border border-gray-300 rounded-xl"
                             >
 
@@ -141,28 +147,40 @@ const AddEmployee = () => {
 
                                 <select
                                     name="department"
-                                    value={formData.department}
-                                    onChange={handleChange}
+                                    value={department}
+                                    onChange={(e) => { setDepartment(e.target.value); setDesignation("") }}
+                                    // onChange={(e) => {setDepartment(e.target.value);setDesignation("")}}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="">
                                         Select Department
                                     </option>
-
                                     <option value="HR">
                                         HR
                                     </option>
-
-                                    <option value="IT">
-                                        IT
+                                    <option value="Development">
+                                        Development
                                     </option>
-
+                                    <option value="QA">
+                                        QA
+                                    </option>
+                                    <option value="UI/UX">
+                                        UI/UX
+                                    </option>
+                                    <option value="DevOps">
+                                        DevOps
+                                    </option>
+                                    <option value="Sales">
+                                        Sales
+                                    </option>
+                                    <option value="Marketing">
+                                        Marketing
+                                    </option>
                                     <option value="Finance">
                                         Finance
                                     </option>
-
-                                    <option value="Marketing">
-                                        Marketing
+                                    <option value="Support">
+                                        Support
                                     </option>
                                 </select>
                             </div>
@@ -174,37 +192,44 @@ const AddEmployee = () => {
                                     Designation
                                 </label>
 
-                                <input
-                                    type="text"
+                                <select
                                     name="designation"
-                                    value={formData.designation}
-                                    onChange={handleChange}
-                                    placeholder="Manager / Developer"
+                                    value={designation}
+                                    disabled={!department}
+                                    onChange={(e) => setDesignation(e.target.value)}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
+                                >
+                                    <option value="">
+                                        {department ? "Select Designation" : "First Select Department"}
+                                    </option>
+                                    {designationMap[department]?.map((item) => (
+                                        <option key={item} value={item}>
+                                            {item}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
+                        </div>
 
-                            {/* Salary */}
+                        {/* Salary */}
+                        <div>
+                            <label className="block mt-5 mb-2 text-sm font-semibold text-gray-700">
+                                Salary
+                            </label>
 
-                            <div>
-                                <label className="block mb-2 text-sm font-semibold text-gray-700">
-                                    Salary
-                                </label>
-
-                                <input
-                                    type="number"
-                                    name="salary"
-                                    value={formData.salary}
-                                    onChange={handleChange}
-                                    placeholder="Enter salary"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                            </div>
+                            <input
+                                type="number"
+                                name="salary"
+                                value={salary}
+                                onChange={(e) => setSalary(e.target.value)}
+                                placeholder="Enter salary"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
 
                         {/* Buttons */}
 
-                        <div className="flex gap-4 mt-10">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-10">
 
                             <button
                                 type="button"
@@ -227,10 +252,10 @@ const AddEmployee = () => {
 
                 </div>
 
-            </div>
+            </div >
 
-        </AdminLayout>
-    );
-};
+        </AdminLayout >
+    )
+}
 
-export default AddEmployee;
+export default AddEmployee

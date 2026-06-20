@@ -6,43 +6,30 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        profileImage: null,
-    });
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [profileImage, setProfileImage] = useState(null)
 
     const history = useHistory()
-
-    const handleChange = (e) => {
-        if (e.target.name === "profileImage") {
-            setFormData({
-                ...formData,
-                profileImage: e.target.files[0],
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [e.target.name]: e.target.value,
-            });
-        }
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(formData);
+        const formData = new FormData()
 
-        const data = new FormData();
+        formData.append("name", name)
+        formData.append("email", email)
+        formData.append("password", password)
 
-        data.append("name", formData.name)
-        data.append("email", formData.email)
-        data.append("password", formData.password)
-        data.append("profileImage", formData.profileImage)
+        if (profileImage) {
+            formData.append("profileImage", profileImage);
+        }
 
         //api call
-        axios.post('https://employee-management-system-1-mj50.onrender.com/api/auth/register', data)
+        axios.post('https://employee-management-system-1-mj50.onrender.com/api/auth/register', formData)
+
             .then((res) => {
                 toast.success('Register Successfully')
                 history.push('/')
@@ -51,17 +38,17 @@ const Register = () => {
             .catch((error) => {
                 toast.error(error.response?.data?.message || error.message)
             })
-    };
+    }
 
     return (
         <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
 
-            <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid lg:grid-cols-2">
+            <div className="max-w-6xl w-full bg-white rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
 
                 {/* Left Side */}
-                <div className="hidden lg:flex flex-col justify-center bg-gradient-to-br from-blue-50 to-slate-100 p-12">
+                <div className="hidden md:flex flex-col justify-center bg-gradient-to-br from-blue-50 to-slate-100 p-12">
 
-                    <h1 className="text-5xl font-bold text-slate-900 leading-tight">
+                    <h1 className="text-3xl xl:text-5xl font-bold text-slate-900 leading-tight">
                         Employee
                         <br />
                         Management System
@@ -76,7 +63,7 @@ const Register = () => {
                         <img
                             src={loginImage}
                             alt="Employee Management"
-                            className="w-80"
+                            className="w-full max-w-xs xl:max-w-sm h-auto"
                         />
                     </div>
 
@@ -85,9 +72,9 @@ const Register = () => {
                 {/* Right Side */}
                 <div className="flex items-center justify-center p-4 lg:px-9 lg:py-8">
 
-                    <div className="w-full max-w-lg bg-white border border-gray-100 rounded-3xl shadow-lg p-8">
+                    <div className="w-full max-w-lg bg-white border border-gray-100 rounded-3xl shadow-lg p-5 sm:p-6 md:p-8 ">
 
-                        <h2 className="text-4xl font-bold text-slate-900">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900">
                             Create Account 🚀
                         </h2>
 
@@ -97,10 +84,10 @@ const Register = () => {
 
                         <form
                             onSubmit={handleSubmit}
-                            className="mt-5 space-y-5"
+                            className="mt-5 space-y-4"
                         >
 
-                            {/* Name */}
+                            {/* Name  */}
                             <div>
                                 <label className="block mb-1 text-sm font-semibold text-gray-700">
                                     Full Name <span className="text-red-500">*</span>
@@ -109,8 +96,8 @@ const Register = () => {
                                 <input
                                     type="text"
                                     name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                     placeholder="Enter Full Name"
                                     className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     required
@@ -126,8 +113,8 @@ const Register = () => {
                                 <input
                                     type="email"
                                     name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter Email Address"
                                     className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     required
@@ -143,8 +130,8 @@ const Register = () => {
                                 <input
                                     type="password"
                                     name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter Password"
                                     className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     required
@@ -161,7 +148,7 @@ const Register = () => {
                                     type="file"
                                     name="profileImage"
                                     accept="image/*"
-                                    onChange={handleChange}
+                                    onChange={(e) => setProfileImage(e.target.files[0])}
                                     className="w-full p-2 text-sm border border-dashed border-gray-300 rounded-xl bg-gray-50"
                                 />
                             </div>
