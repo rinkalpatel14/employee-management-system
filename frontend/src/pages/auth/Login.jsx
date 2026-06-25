@@ -13,6 +13,11 @@ const Login = () => {
 
     const history = useHistory()
 
+    const handleDemoLogin = () => {
+    setEmail("admin@gmail.com");
+    setPassword("123456");
+}
+    
     const handleSubmit = (e) => {
         e.preventDefault()  // Prevent page refresh
 
@@ -125,6 +130,13 @@ const Login = () => {
                                 >
                                     Login
                                 </button>
+                              <button
+  type="button"
+  onClick={handleDemoLogin}
+  className="w-full mt-3 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition"
+>
+  🚀 Use Demo Admin Account
+</button>
 
                                 {/* Register */}
                                 <p className="text-center text-sm text-gray-500 mt-6">
